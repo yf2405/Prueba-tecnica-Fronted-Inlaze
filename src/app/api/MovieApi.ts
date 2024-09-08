@@ -1,8 +1,11 @@
 import axios from 'axios';
 
-const TMDB_API_URL = process.env.NEXT_PUBLIC_TMDB_API_URL;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-const TOKEN = process.env.NEXT_PUBLIC_TOKEN;
+// URL base y API key
+const TMDB_API_URL = 'https://api.themoviedb.org/3';
+const API_KEY = '8a3713dd5f4aaf48a1e9247f0b598d8b';
+
+// Token JWT
+const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4YTM3MTNkZDVmNGFhZjQ4YTFlOTI0N2YwYjU5OGQ4YiIsIm5iZiI6MTcyNTcyNTgwMC42NDg4MzEsInN1YiI6IjYyOWI3MzlkZGMxY2I0MGU0OTQwNWY2NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2gPVrjjxnonG7SW10J0JHQ8RFVP6aYTEqR6UG3NCx9A';
 
 // Obtener las películas populares con el token
 export const getPopularMovies = async () => {
