@@ -1,6 +1,6 @@
 "use client";
 import Header from "../components/Header";
-import BarLeft from "../components/bar";
+import BarLeft from "../components/BarLeft";
 import Card from "../components/card";
 import { useState } from "react";
 
