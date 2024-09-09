@@ -1,27 +1,12 @@
 import axios from "axios";
+import { Genre, Movie, MovieDetails } from "../types";
 
 // URL base y API key
 const TMDB_API_URL = process.env.NEXT_PUBLIC_TMDB_API_URL;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const TOKEN = process.env.NEXT_PUBLIC_TOKEN;
 
-interface Movie {
-  id: number;
-  title: string;
-  // Otros campos relevantes
-}
 
-interface MovieDetails {
-  id: number;
-  title: string;
-  overview: string;
-  // Otros detalles de la película
-}
-
-interface Genre {
-  id: number;
-  name: string;
-}
 // Obtener películas populares
 export const getPopularMovies = async (): Promise<Movie[]> => {
   try {
@@ -74,7 +59,7 @@ export const getMovieCategories = async (): Promise<Genre[]> => {
 };
 
 // Obtener películas por categoría
-export const getMoviesByCategory = async (categoryName: string): Promise<Movie[]> => {
+export const getMoviesByCategory = async (categoryName: string): Promise<MovieDetails[]> => {
   try {
     const response = await axios.get(`${TMDB_API_URL}/discover/movie`, {
       headers: {
@@ -85,14 +70,14 @@ export const getMoviesByCategory = async (categoryName: string): Promise<Movie[]
         with_genres: categoryName,
       },
     });
-    return response.data.results as Movie[];
+    return response.data.results as MovieDetails[];
   } catch (error) {
     throw error;
   }
 };
 
 // Obtener detalles de la película
-export const getMovieDetails = async (id: number): Promise<MovieDetails> => {
+export const getMovieDetails = async (id: string | undefined): Promise<MovieDetails> => {
   try {
     const response = await axios.get(`${TMDB_API_URL}/movie/${id}`, {
       params: {
@@ -106,14 +91,14 @@ export const getMovieDetails = async (id: number): Promise<MovieDetails> => {
 };
 
 // Obtener películas relacionadas
-export const getRelatedMovies = async (id: number): Promise<Movie[]> => {
+export const getRelatedMovies = async (id: string | undefined): Promise<MovieDetails[]> => {
   try {
     const response = await axios.get(`${TMDB_API_URL}/movie/${id}/similar`, {
       params: {
         api_key: API_KEY,
       },
     });
-    return response.data.results as Movie[];
+    return response.data.results as MovieDetails[];
   } catch (error) {
     throw error;
   }

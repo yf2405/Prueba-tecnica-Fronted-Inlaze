@@ -5,12 +5,15 @@ import Link from "next/link";
 import { HeartIcon } from "@/components/IconsFuctions";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import type { MovieDetails } from '@/app/types';
+
 
 export default function MovieDetails() {
-  const [movie, setMovie] = useState(null);
-  const [relatedMovies, setRelatedMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [movie, setMovie] = useState<MovieDetails | null>(null); // Usas la interfaz importada
+  const [relatedMovies, setRelatedMovies] = useState<MovieDetails[]>([]); // Usas la interfaz importada
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
 
   useEffect(() => {
     const url = window.location.pathname;
@@ -57,7 +60,7 @@ export default function MovieDetails() {
             style={{
               backgroundImage: `url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundPosition: "center"
             }}
           />
           {/* Contenido sobre la imagen */}
@@ -90,15 +93,15 @@ export default function MovieDetails() {
                         text={`${Math.round(movie.vote_average * 10)}%`}
                         styles={{
                           path: {
-                            stroke: "#00ff2f",
+                            stroke: "#00ff2f"
                           },
                           text: {
                             fill: "#00ff2f",
-                            fontSize: "16px",
+                            fontSize: "16px"
                           },
                           trail: {
-                            stroke: "#d6d6d6",
-                          },
+                            stroke: "#d6d6d6"
+                          }
                         }}
                       />
                     </div>
