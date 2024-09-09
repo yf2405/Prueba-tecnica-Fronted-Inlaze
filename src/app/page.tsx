@@ -1,7 +1,8 @@
 "use client";
-import Header from "../components/Header";
-import BarLeft from "../components/BarLeft";
-import Card from "../components/card";
+
+import BarLeft from "@/components/BarLeft";
+import Card from "@/components/Card";
+import Header from "@/components/Header";
 import { useState } from "react";
 
 export default function Home(): JSX.Element {
