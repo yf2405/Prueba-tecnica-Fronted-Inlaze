@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 export default function WelcomeMessage({ onClose }) {
   return (
@@ -9,7 +9,9 @@ export default function WelcomeMessage({ onClose }) {
       exit={{ opacity: 0 }}
     >
       <h2 className="text-2xl font-bold text-center mb-4">¡Bienvenido!</h2>
-      <p className="text-center text-gray-700">Has iniciado sesión exitosamente.</p>
+      <p className="text-center text-gray-700">
+        Has iniciado sesión exitosamente.
+      </p>
       <button
         className="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg w-full"
         onClick={onClose}

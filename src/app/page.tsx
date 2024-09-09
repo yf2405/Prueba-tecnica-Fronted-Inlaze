@@ -1,6 +1,4 @@
-'use client'
-import Navbar from "@/components/navbar";
-import RootLayout from "./layout";
+"use client";
 import Header from "@/components/Header";
 import BarLeft from "@/components/bar";
 import Card from "@/components/card";
@@ -11,7 +9,6 @@ export default function Home(): JSX.Element {
 
   return (
     <>
-      <Navbar />
       <Header />
       <main className="relative flex">
         {/* Barra lateral con posición absoluta */}
@@ -19,7 +16,8 @@ export default function Home(): JSX.Element {
 
         {/* Contenido principal con margen para evitar superposición */}
         <div className="w-full">
-          <Card selectedCategory={selectedCategory} /> {/* PASA selectedCategory */}
+          <Card selectedCategory={selectedCategory} />{" "}
+          {/* PASA selectedCategory */}
         </div>
       </main>
     </>

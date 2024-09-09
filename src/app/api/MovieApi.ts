@@ -1,32 +1,46 @@
-import axios from 'axios';
+import axios from "axios";
 
 // URL base y API key
-const TMDB_API_URL = 'https://api.themoviedb.org/3';
-const API_KEY = '8a3713dd5f4aaf48a1e9247f0b598d8b';
+const TMDB_API_URL = process.env.NEXT_PUBLIC_TMDB_API_URL;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const TOKEN = process.env.NEXT_PUBLIC_TOKEN;
 
-// Token JWT
-const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4YTM3MTNkZDVmNGFhZjQ4YTFlOTI0N2YwYjU5OGQ4YiIsIm5iZiI6MTcyNTcyNTgwMC42NDg4MzEsInN1YiI6IjYyOWI3MzlkZGMxY2I0MGU0OTQwNWY2NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2gPVrjjxnonG7SW10J0JHQ8RFVP6aYTEqR6UG3NCx9A';
+interface Movie {
+  id: number;
+  title: string;
+  // Otros campos relevantes
+}
 
-// Obtener las películas populares con el token
-export const getPopularMovies = async () => {
+interface MovieDetails {
+  id: number;
+  title: string;
+  overview: string;
+  // Otros detalles de la película
+}
+
+interface Genre {
+  id: number;
+  name: string;
+}
+// Obtener películas populares
+export const getPopularMovies = async (): Promise<Movie[]> => {
   try {
     const response = await axios.get(`${TMDB_API_URL}/movie/popular`, {
       headers: {
-        Authorization: `Bearer ${TOKEN}`,  // Incluye el token JWT en los headers
+        Authorization: `Bearer ${TOKEN}`,
       },
       params: {
-        api_key: API_KEY,  // También puedes incluir la API key si es necesaria
+        api_key: API_KEY,
       },
     });
-    return response.data.results;  // Retorna la lista de películas
+    return response.data.results as Movie[];
   } catch (error) {
-    console.error('Error fetching popular movies:', error);
-    throw error;  // Lanza el error para manejarlo en el componente
+    throw error;
   }
 };
 
-// Obtener detalles de una película por ID
-export const getMovieById = async (id: string) => {
+// Obtener película por ID
+export const getMovieById = async (id: number): Promise<MovieDetails> => {
   try {
     const response = await axios.get(`${TMDB_API_URL}/movie/${id}`, {
       headers: {
@@ -36,15 +50,14 @@ export const getMovieById = async (id: string) => {
         api_key: API_KEY,
       },
     });
-    return response.data;  // Retorna los datos de la película
+    return response.data as MovieDetails;
   } catch (error) {
-    console.error('Error fetching movie by ID:', error);
     throw error;
   }
 };
 
-// Obtener categorías de películas (géneros)
-export const getMovieCategories = async () => {
+// Obtener géneros de películas
+export const getMovieCategories = async (): Promise<Genre[]> => {
   try {
     const response = await axios.get(`${TMDB_API_URL}/genre/movie/list`, {
       headers: {
@@ -54,41 +67,54 @@ export const getMovieCategories = async () => {
         api_key: API_KEY,
       },
     });
-    return response.data.genres;  // Retorna la lista de géneros
+    return response.data.genres as Genre[];
   } catch (error) {
-    console.error('Error fetching movie genres:', error);
     throw error;
   }
 };
 
-export const getMoviesByCategory = async (categoryName: string) => {
+// Obtener películas por categoría
+export const getMoviesByCategory = async (categoryName: string): Promise<Movie[]> => {
   try {
     const response = await axios.get(`${TMDB_API_URL}/discover/movie`, {
-      params: {
-        api_key: API_KEY,
-        with_genres: categoryName,  // Filtro por género o categoría
-      },
       headers: {
         Authorization: `Bearer ${TOKEN}`,
       },
+      params: {
+        api_key: API_KEY,
+        with_genres: categoryName,
+      },
     });
-    return response.data.results;
+    return response.data.results as Movie[];
   } catch (error) {
-    console.error('Error fetching movies by category:', error);
     throw error;
   }
 };
 
-export const getMovieDetails = async (id) => {
+// Obtener detalles de la película
+export const getMovieDetails = async (id: number): Promise<MovieDetails> => {
   try {
     const response = await axios.get(`${TMDB_API_URL}/movie/${id}`, {
       params: {
-        api_key: API_KEY, 
+        api_key: API_KEY,
       },
     });
-    return response.data; 
+    return response.data as MovieDetails;
   } catch (error) {
-    console.error('Error fetching movie details:', error);
-    throw error; 
+    throw error;
+  }
+};
+
+// Obtener películas relacionadas
+export const getRelatedMovies = async (id: number): Promise<Movie[]> => {
+  try {
+    const response = await axios.get(`${TMDB_API_URL}/movie/${id}/similar`, {
+      params: {
+        api_key: API_KEY,
+      },
+    });
+    return response.data.results as Movie[];
+  } catch (error) {
+    throw error;
   }
 };

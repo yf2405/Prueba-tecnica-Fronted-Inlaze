@@ -1,20 +1,20 @@
-"use client"
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { User, Mail, Lock, Loader } from 'lucide-react'; 
-import { useAuthStore } from '@/app/api/UsersApi';
+"use client";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { User, Mail, Lock } from "lucide-react";
+import { useAuthStore } from "@/app/api/UsersApi";
 
 export default function RegisterForm({ toggleView }) {
   const { signup, isLoading, error } = useAuthStore();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       await signup(email, password, name);
-      toggleView();  // Cambiar al login tras registro exitoso
+      toggleView(); // Cambiar al login tras registro exitoso
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +34,9 @@ export default function RegisterForm({ toggleView }) {
 
         <form onSubmit={handleSignUp}>
           <div className="mb-4">
-            <label htmlFor="name" className="sr-only">Full Name</label>
+            <label htmlFor="name" className="sr-only">
+              Full Name
+            </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 <User className="text-gray-400" />
@@ -49,9 +51,11 @@ export default function RegisterForm({ toggleView }) {
               />
             </div>
           </div>
-          
+
           <div className="mb-4">
-            <label htmlFor="email" className="sr-only">Email Address</label>
+            <label htmlFor="email" className="sr-only">
+              Email Address
+            </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 <Mail className="text-gray-400" />
@@ -68,7 +72,9 @@ export default function RegisterForm({ toggleView }) {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="password" className="sr-only">Password</label>
+            <label htmlFor="password" className="sr-only">
+              Password
+            </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 <Lock className="text-gray-400" />
@@ -91,11 +97,14 @@ export default function RegisterForm({ toggleView }) {
             type="submit"
             disabled={isLoading}
           >
-            {isLoading ? 'Loading...' : 'Sign Up'}
+            {isLoading ? "Loading..." : "Sign Up"}
           </motion.button>
         </form>
 
-        <button onClick={toggleView} className="text-green-400 hover:underline mt-4">
+        <button
+          onClick={toggleView}
+          className="text-green-400 hover:underline mt-4"
+        >
           Already have an account? Login
         </button>
       </div>
