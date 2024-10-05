@@ -7,6 +7,7 @@ import "react-circular-progressbar/dist/styles.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function Header() {
   const [popularMovies, setPopularMovies] = useState<any[]>([]);
@@ -30,16 +31,7 @@ export default function Header() {
     fetchMovies();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full">
-        <div className="spinner" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-        <p className="mt-4 text-gray-500">Cargando...</p>
-      </div>
-    );
-  }
+  loading? LoadingSpinner : ''
 
   if (error) {
     return (

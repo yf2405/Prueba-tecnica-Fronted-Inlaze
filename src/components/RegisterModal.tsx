@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { User, Mail, Lock } from "lucide-react";
 import { useAuthStore } from "@/app/api/UsersApi";
 
-export default function RegisterForm({ toggleView }) {
+export default function RegisterForm({ toggleView, setVeryfycate }) {
   const { signup, isLoading, error } = useAuthStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ export default function RegisterForm({ toggleView }) {
     e.preventDefault();
     try {
       await signup(email, password, name);
-      toggleView(); // Cambiar al login tras registro exitoso
+      setVeryfycate(); // Cambiar al login tras registro exitoso
     } catch (error) {
       console.log(error);
     }

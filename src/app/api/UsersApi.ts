@@ -27,6 +27,9 @@ interface AuthState {
 
   // Función para verificar si el usuario ya está autenticado
   checkAuth: () => Promise<void>;
+   // Nueva función para verificar el correo electrónico
+   verifyEmail: (code: string) => Promise<void>; // <-- Añadida
+
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -116,12 +119,22 @@ export const useAuthStore = create<AuthState>((set) => ({
       throw error; // Lanza el error para manejo posterior, si es necesario
     }
   },
-
+  verifyEmail: async (code) => {
+		set({ isLoading: true, error: null });
+		try {
+			const response = await axios.post(`${API_URL}/verify-email`, { code });
+			set({ user: response.data.user, isAuthenticated: true, isLoading: false });
+			return response.data;
+		} catch (error: any) {
+			set({ error: error.response.data.message || "Error verifying email", isLoading: false });
+			throw error;
+		}
+	},
   // Función para verificar si el usuario ya está autenticado
   checkAuth: async () => {
     set({ isCheckingAuth: true });
     try {
-      const response = await axiosInstance.get("/verify");
+      const response = await axiosInstance.get("/checkAuth");
       set({
         user: response.data.data.user,
         isAuthenticated: true,

@@ -1,19 +1,24 @@
+"use client"
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LoginForm from "./LoginModal";
 import RegisterForm from "./RegisterModal";
 import WelcomeMessage from "./WelcomComponent";
+import EmailVerificationPage from "./EmailVerificationPage";
 
 export default function Modal({ isOpen, onClose }) {
   const [isRegister, setIsRegister] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false); // Estado para mostrar el mensaje de bienvenida
-
+  const [verificate, setVerifycate] = useState(false); // Pasa a verificar
   const toggleView = () => {
     setIsRegister(!isRegister);
   };
 
   const handleLoginSuccess = () => {
     setShowWelcome(true); // Mostrar el modal de bienvenida
+  };
+  const handleVerifytate = () => {
+    setVerifycate(true); // Mostrar el modal de bienvenida
   };
 
   if (!isOpen) return null;
@@ -44,7 +49,17 @@ export default function Modal({ isOpen, onClose }) {
                 }}
               />
             </motion.div>
-          ) : isRegister ? (
+          ) :  verificate ? (
+            <motion.div
+              key="EmailVerificationPage"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <EmailVerificationPage  onLoginSuccess={handleLoginSuccess}/>
+            </motion.div>) :
+          isRegister ? (
             <motion.div
               key="register"
               initial={{ opacity: 0, y: 20 }}
@@ -52,7 +67,9 @@ export default function Modal({ isOpen, onClose }) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
             >
-              <RegisterForm toggleView={toggleView} />
+              <RegisterForm 
+               toggleView={toggleView} 
+               setVeryfycate={handleVerifytate}/>
             </motion.div>
           ) : (
             <motion.div

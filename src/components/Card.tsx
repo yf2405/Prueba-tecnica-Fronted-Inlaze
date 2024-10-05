@@ -5,6 +5,7 @@ import { getMoviesByCategory, getPopularMovies } from "@/app/api/MovieApi";
 import { useMovieStore } from "@/app/api/LikedMovie";
 import { HeartIcon, StarIcon } from "./IconsFuctions";
 import { useAuthStore } from "@/app/api/UsersApi";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface Movie {
   id: number;
@@ -41,7 +42,7 @@ export default function Card({ selectedCategory }) {
     fetchMovies();
   }, [selectedCategory]);
 
-  if (loading) return <p>Loading...</p>;
+    loading? LoadingSpinner : null
   if (error) return <p>{error}</p>;
 
   return (
